@@ -4,15 +4,30 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SistemaVenda.DAL;
+using SistemaVenda.Entidades;
 using SistemaVenda.Models;
 
 namespace SistemaVenda.Controllers
 {
     public class HomeController : Controller
     {
+        //Obtem acesso aos dados
+        protected AppDbContext _ctx;
+
+        //Construtor
+        public HomeController(AppDbContext ctx)
+        {
+            //Define o context de HomeController
+            _ctx = ctx;
+        }
+
+
         public IActionResult Index()
         {
-            return View();
+            //Carrega a Lista de Categorias e passa como parametro para a View do Controller
+            IEnumerable<Categorias> categorias = _ctx.Categorias.ToList();
+            return View(categorias);
         }
 
         public IActionResult About()

@@ -54,6 +54,18 @@
 </div>
 
 <div class="row">
+    @using SistemaVenda.Entidades;
+    @model List<Categorias>;
+
+    @foreach (var item in Model)
+    {
+        var aux = item.Id + " - " + item.Descricao;
+        <span>@aux</span><br />
+    }
+
+</div>
+
+<div class="row">
     <div class="col-md-3">
         <h2>Application uses</h2>
         <ul>

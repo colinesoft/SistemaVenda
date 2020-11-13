@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SistemaVenda.DAL;
 
 namespace SistemaVenda
 {
@@ -30,6 +32,13 @@ namespace SistemaVenda
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            //BANCO DE DADOS
+            //Faz a amarração com o Banco de Dados em SQLServer
+            services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer("Server=localhost;DataBase=Estoque;Trusted_Connection=true;MultipleActiveResultSets=true"));
+            //Não entendi o pq, mas é necessário
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSession();
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
